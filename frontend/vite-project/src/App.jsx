@@ -4,12 +4,14 @@ import './App.css'
 
 import DroneData from './components/DroneData';
 import QueryForm from './components/QueryForm';
+import AnswerQuery from './components/AnswerQuery';
 
 function App() {
 
   //store drone dataset from backend
   const [data, setData] = useState([])
   const [query, setQuery] = useState("")
+  const [answer, setAnswer] = useState("")
 
   //fetch drone dataset from backend
   useEffect(() => {
@@ -29,7 +31,7 @@ function App() {
   const handleQueries = async(query) => {
     try {
       console.log("handleQueries reached", query)
-      
+
     } catch (error) {
       console.error("Error processing User Query", error.message)
     }
@@ -43,6 +45,10 @@ function App() {
 
         <div className='queryForm'>
           <QueryForm query={query} setQuery={setQuery} handleQueries={handleQueries}/>
+        </div>
+
+        <div className='answerField'>
+          { answer && <AnswerQuery answer={answer} setAnswer={setAnswer} />}
         </div>
 
         <div className='dataCards'>

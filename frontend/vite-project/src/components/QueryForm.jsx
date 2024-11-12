@@ -8,11 +8,10 @@ const QueryForm = ({ query, setQuery, handleQueries }) => {
     return ( 
         <>
         <div className="queryForm">
-            <h3>User Queries</h3>
 
             <form>
 
-            <input id="userInput" type="text" placeholder="ask about drones..." className="textInput" value={query} 
+            <input id="userInput" type="text" placeholder="ask openAI about the datasets below..." className="textInput" value={query} 
             onChange={(e) => {
             setQuery(e.target.value)
             }}/> {"   "}
