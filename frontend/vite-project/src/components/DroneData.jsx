@@ -4,6 +4,7 @@ const DroneData = ({ data }) => {
     return ( 
     <>
         <section className="droneData">
+            <h3>Drone Datasets</h3>
             <div className="cards">
                 {data.map((drone) => (  
                     <ul className="card" key={drone.image_id}>

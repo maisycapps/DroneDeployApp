@@ -5,6 +5,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+//access API KEY
+const dotenv = require("dotenv")
+dotenv.config()
+
+//Open AI setup
+const OpenAI = require('openai')
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
+
+const aiTest = async() => { 
+    const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+        { role: "system", content: "You are a helpful assistant." },
+        {
+            role: "user",
+            content: "Write a haiku about recursion in programming.",
+        },
+    ],
+})
+console.log(completion.choices[0].message);
+}
+aiTest();
+
 //provided drone datasets
 const data = [
     {

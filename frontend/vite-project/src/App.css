@@ -1,7 +1,36 @@
 .frame {
-  display: flex;
+  display: grid;
   place-content: center;
-  margin: 4rem;
+  margin-top: 4rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  padding: 2rem;
+}
+
+.card {
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 25px;
+  min-height: 500px;
+  width: 400px;
+  display: grid;
+  gap: 5px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-flow: wrap;
+  justify-content: center;
+}
+
+.queryForm {
+  display: grid;
+  place-items: center;
 }
 
 .textInput {
@@ -20,8 +49,6 @@ button {
   align-content: center;
 }
 
-ul {
-  list-style-type: none;
-  border: 1px solid black;
-  padding: 2rem;
+h3 {
+  text-align: center;
 }

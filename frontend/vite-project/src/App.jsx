@@ -8,16 +8,14 @@ import QueryForm from './components/QueryForm';
 function App() {
 
   //store drone dataset from backend
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([])
+  const [query, setQuery] = useState("")
 
   //fetch drone dataset from backend
   useEffect(() => {
-    
     const getDroneData = async() => {
-      console.log("getDroneData initialized")
       try {
         const response = await axios.get('http://localhost:3000/drone-data')
-        console.log("response", response)
         const result = await response.data
         setData(result)
       } catch (error) {
@@ -25,20 +23,32 @@ function App() {
       }
     }
     getDroneData()
-
   }, []);
+
+  //handle user queries
+  const handleQueries = async(query) => {
+    try {
+      console.log("handleQueries reached", query)
+      
+    } catch (error) {
+      console.error("Error processing User Query", error.message)
+    }
+  }
 
 
 
   return (
     <>
-      <div className="card">
+      <div className='frame'>
 
-        <DroneData data={data}/>
+        <div className='queryForm'>
+          <QueryForm query={query} setQuery={setQuery} handleQueries={handleQueries}/>
+        </div>
 
-        <QueryForm />
-
-
+        <div className='dataCards'>
+          <DroneData data={data}/>
+        </div>
+        
       </div>
     </>
   )
