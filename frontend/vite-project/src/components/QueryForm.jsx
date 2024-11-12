@@ -1,9 +1,10 @@
-const QueryForm = ({ query, setQuery, handleQueries }) => {
+const QueryForm = ({ query, setQuery, handleQueries, setAnswer }) => {
 
     const handleSubmit = (e, query) => {
         e.preventDefault()
         handleQueries(query)
         setQuery("")
+        setAnswer("")
     }
     return ( 
         <>

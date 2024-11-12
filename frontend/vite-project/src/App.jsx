@@ -31,6 +31,11 @@ function App() {
   const handleQueries = async(query) => {
     try {
       console.log("handleQueries reached", query)
+      const response = await axios.post('http://localhost:3000/ask-openAI', 
+       { body : query }
+      )
+      const result = await response.data
+      console.log("handleQueries Result:", result)
 
     } catch (error) {
       console.error("Error processing User Query", error.message)
@@ -44,11 +49,11 @@ function App() {
       <div className='frame'>
 
         <div className='queryForm'>
-          <QueryForm query={query} setQuery={setQuery} handleQueries={handleQueries}/>
+          <QueryForm query={query} setQuery={setQuery} setAnswer={setAnswer} handleQueries={handleQueries}/>
         </div>
 
         <div className='answerField'>
-          { answer && <AnswerQuery answer={answer} setAnswer={setAnswer} />}
+          { answer && <AnswerQuery answer={answer} />}
         </div>
 
         <div className='dataCards'>
