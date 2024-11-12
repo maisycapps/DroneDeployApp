@@ -30,19 +30,23 @@ function App() {
   //handle user queries
   const handleQueries = async(query) => {
     try {
-      console.log("handleQueries reached", query)
-      const response = await axios.post('http://localhost:3000/ask-openAI', 
-       { body : query }
-      )
-      const result = await response.data
-      console.log("handleQueries Result:", result)
 
+    //formatting data for AI query
+    const formatData = data.map((x) => `Image ID: ${x.image_id}, Timestamp: ${x.timestamp}, Latitude: ${x.latitude}, Longitude: ${x.longitude}, Altitude: ${x.altitude_m} m., Heading: ${x.heading_deg} deg., File Name: ${x.file_name}, Camera Tilt: ${x.camera_tilt_deg} deg., Focal Length: ${x.focal_length_mm} mm., ISO: ${x.iso}, Shutter Speed: ${x.shutter_speed}, Aperture: ${x.aperture}, Color Temperature: ${x.color_temp_k} k., Image Format: ${x.image_format}, File Size: ${x.file_size_mb} mb., Drone Speed: ${x.drone_speed_mps} mps., Battery Level: ${x.battery_level_pct} pct., GPS Accuracy: ${x.gps_accuracy_m} m., Gimbal Mode: ${x.gimbal_mode}, Subject Detection: ${x.subject_detection}, Image Tags: ${x.image_tags[0]}, ${x.image_tags[1]}`)
+
+    const queryData = formatData.join(". ")
+
+    const prompt = `${query} ? Craft a relevant response based on this dataset: ${queryData}`
+    
+      const response = await axios.post('http://localhost:3000/ask-openAI', 
+       { prompt }
+      )
+      const result = await response.data.answer
+      setAnswer(result)
     } catch (error) {
       console.error("Error processing User Query", error.message)
     }
   }
-
-
 
   return (
     <>

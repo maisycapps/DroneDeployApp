@@ -140,34 +140,21 @@ app.get('/drone-data', (req, res) => {
 
 app.post('/ask-openAI', (req, res) => {
 
-    const query = req.body
-    console.log("received prompt on backend", query)
-
-
-    //formatting data for AI query
-
-    const formatData = data.map((x) => `Image ID: ${x.image_id}, Timestamp: ${x.timestamp}, Latitude: ${x.latitude}, Longitude: ${x.longitude}, Altitude: ${x.altitude_m} m., Heading: ${x.heading_deg} deg., File Name: ${x.file_name}, Camera Tilt: ${x.camera_tilt_deg} deg., Focal Length: ${x.focal_length_mm} mm., ISO: ${x.iso}, Shutter Speed: ${x.shutter_speed}, Aperture: ${x.aperture}, Color Temperature: ${x.color_temp_k} k., Image Format: ${x.image_format}, File Size: ${x.file_size_mb} mb., Drone Speed: ${x.drone_speed_mps} mps., Battery Level: ${x.battery_level_pct} pct., GPS Accuracy: ${x.gps_accuracy_m} m., Gimbal Mode: ${x.gimbal_mode}, Subject Detection: ${x.subject_detection}, Image Tags: ${x.image_tags[0]}, ${x.image_tags[1]}`)
-
-    const queryData = formatData.join(". ")
-
-    const prompt = [query, "?", " Craft a relevant response based on this dataset:"].concat(queryData)
+    const prompt = req.body.prompt
 
     try {
-        const askOpenAI = async(prompt) => { 
-            console.log("askOpenAI Prompt", prompt)
+        const askOpenAI = async(userPrompt) => { 
+
             const completion = await openai.chat.completions.create({
             model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: "You are a helpful assistant." },
-                {
-                    role: "user",
-                    content: [{ type: "text", content: `${prompt}` }],
-                },
+                { role: "user", content: userPrompt },
                 ],
             })
-            console.log("openAI response:", completion)
+
             const answer = await completion.choices[0].message.content
-            res.json(answer)
+            res.json({ answer })
         }
          askOpenAI(prompt)
         
