@@ -124,6 +124,11 @@ const data = [
         }
 ];
 
+//route for axios call 
+app.get('/drone-data', (req, res) => {
+    res.json(data);
+})
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
